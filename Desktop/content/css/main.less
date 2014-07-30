@@ -36,7 +36,8 @@ body, html {
 		color: #f57c00;
 	
 		&:hover {
-			color: #ef6c00;
+			color: #fb8c00;
+			background: #ef6c00;
 			cursor: pointer;
 		}
 	}
@@ -49,7 +50,7 @@ body, html {
 	left: 0;
 	right: 0;
 	
-	height: 50px;
+	height: 80px;
 	
 	background: #ffb74d;
 }
@@ -57,7 +58,7 @@ body, html {
 .container {
 	width: 60%;
 	
-	min-width: 400px;
+	min-width: 600px;
 	
 	position: absolute;
 	margin-left: auto;
@@ -65,12 +66,21 @@ body, html {
 	left: 0;
 	right: 0;
 	
-	top: 65px;
+	top: 85px;
 	
-	.content {
-		width: 100%;
-		height: 100%;
+	.section {
+		background: #fff;
 		
-		background: #ff0;
+		min-height: 300px;
+		border: 1px solid black;
+		&.left {
+			float:left;
+			width: 30%;
+		}
+		&.right {
+			float:right;
+			width: 60%;
+		}
 	}
+	
 }
