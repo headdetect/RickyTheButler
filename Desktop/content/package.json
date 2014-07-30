@@ -1,0 +1,13 @@
+{
+    "name": "Frameless Window",
+    "description": "Tasker Slave, android app helper",
+    "version": "0.1a",
+    "main": "index.html",
+    "window": {
+        "toolbar": false,
+        "frame": false,
+        "position": "center",
+        "width": 600,
+        "height": 500
+    }
+}
