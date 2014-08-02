@@ -1,0 +1,1 @@
+{"commands":[{"name":"Lock Computer","command":"echo \"sup\""}],"options":{"server":"localhost","port":80}}
