@@ -5,6 +5,6 @@ Slave for the famous android app [Tasker](https://play.google.com/store/apps/det
 
 ### Screen shots
 **Front Page**  
-![Murica](http://imgur.com/qtD0BXg "Very rough sketch of the program")
+![Murica](http://imgur.com/qtD0BXg.png "Very rough sketch of the program")
 
 
