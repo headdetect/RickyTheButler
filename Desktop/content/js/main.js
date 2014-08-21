@@ -1,6 +1,7 @@
 var gui     = require('nw.gui'),
     fs      = require('fs'),
-    mkdirp  = require('mkdirp');
+    mkdirp  = require('mkdirp'),
+    ip      = require('ip');
 
 var win = gui.Window.get();
 
@@ -95,6 +96,8 @@ function loadCommandView(index) {
 
 (function($) {
     reloadCommandList();
+    
+    $("[title]").tooltip();
 
     $("#close").click(function() {
         win.close();
@@ -131,5 +134,6 @@ function loadCommandView(index) {
         });
     });
     
+    $('#lblLocalIP').text( ip.address() );
     
 })(jQuery);
