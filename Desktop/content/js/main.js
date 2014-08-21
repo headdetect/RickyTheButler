@@ -1,12 +1,13 @@
-
-
 var gui     = require('nw.gui'),
     fs      = require('fs'),
     mkdirp  = require('mkdirp');
 
-    var win = gui.Window.get();
+var win = gui.Window.get();
 
 var storageLocation = "./files/storage.json";
+
+var storage;
+
 
 if(fs.existsSync(storageLocation)) {
 
@@ -14,55 +15,121 @@ if(fs.existsSync(storageLocation)) {
 
 } else {
     // Is first run //
-
-    var commands = [];
-    var options = {
-        server : "localhost",
+    
+    var commands = [{ 
+            name : "Lock Computer",
+            command : "echo hi",
+            url : "/lockcomputer"
+    }];
+    
+    var server = {
+        bind : "localhost",
         port   : 80
     };
 
-    var storage = {
+    storage = {
         "commands" : commands,
-        "options"  : options
+        "options"  : server
     };
 
     mkdirp("./files/"); // Create the folders //
-    fs.appendFile(storageLocation, JSON.stringify(storage), function(e) {
+    saveStorage();
+}
+
+function saveStorage(onComplete) {
+    fs.writeFile(storageLocation, JSON.stringify(storage), function(e) {
         if(e) throw e;
 
-        console.log("Created storage.json");
+        console.log("Wrote to -> storage.json");
+        if( onComplete !== null) 
+            onComplete();
     });
 }
 
-var storage;
+function reloadCommandList() {
+    fs.readFile("./files/storage.json", function(err, data) {
+        if(err) throw err;
 
-fs.readFile("./files/storage.json", function(err, data) {
-    if(err) throw err;
+        storage = JSON.parse(data);
 
-    storage = JSON.parse(data);
+        // Fill list //
 
-    // Fill list //
+        var lstCommands = $("#lstCommands");
+            lstCommands.html('');
 
-    var lstCommands = $("#lstCommands");
+        for (var i = 0; i < storage.commands.length; i++) {
+            var command = storage.commands[i];
 
-    for (var i = 0; i < storage.commands.length; i++) {
-        var command = storage.commands[i];
+            var wrapper = $("<a href='javascript:void(0)' onclick='loadCommandView(" + i + ")' class='list-group-item'><b>" + command.name + "</b><p class='list-group-item-text text-muted'>" + command.url + "</p></a>");
+            lstCommands.prepend(wrapper);
+        }
+    });
+}
 
-        var wrapper = $("<a href='javascript:void(0)' onclick='loadCommandView(" + i + ")' class='list-group-item'>" + command.name + "</a>");
-        lstCommands.prepend(wrapper);
+
+function loadCommandView(index) {
+    if( index == -1 ) {
+        storage.commands.push({
+            name: "New Command",
+            command: "",
+            url: ""
+        });
+        index = storage.commands.length - 1;
     }
-});
+    
+    var command = storage.commands[index];
+    var commandArea = $("#command-area");
 
-
-
- var loadCommandView = function(index) {
-    console.log(storage.commands[index].command);
+    
+    // Fill Command Area //
+    $("#txtCommandTitle").data("id", index);
+    $("#btnSaveCommand").data("id", index);
+    $("#txtCommandTitle").text(command.name);
+    $("#txtCommand").val(command.command);
+    $("#txtUrl").val(command.url);
+    
+    commandArea.show();
 };
 
+
+
 (function($) {
+    reloadCommandList();
 
     $("#close").click(function() {
         win.close();
+    }); 
+    
+    $("#txtCommandTitle").click(function() {
+        var commandID = $(this).data("id");
+        bootbox.prompt("Rename this command to?", function(result) {                
+            if (result !== null) {                                             
+                 storage.commands[commandID].name = result;    
+                loadCommandView(commandID);
+            }
+        });
     });
+    
+    $("#btnAddCommand").click(function() {
+        loadCommandView(-1);
+    });
+    
+    $("#btnSaveCommand").click(function() {
+        var index = $(this).data("id");
+        var command = storage.commands[index];
+        var $this = $(this);
+        $this.button('loading')
+
+        // Fill Command Area //
+        command.name = $("#txtCommandTitle").text();
+        command.command = $("#txtCommand").val();
+        command.url = $("#txtUrl").val();
+        
+        saveStorage(function(){
+            reloadCommandList();
+            $this.button('reset');
+        });
+    });
+    
     
 })(jQuery);
