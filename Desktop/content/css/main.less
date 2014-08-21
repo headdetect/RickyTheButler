@@ -16,7 +16,7 @@ body, html {
     color: #eee;
     background: #ff9800;
 
-    z-index: 1000;
+    z-index: 900;
     position: absolute;
 	
 	top:0;
@@ -26,18 +26,28 @@ body, html {
     -webkit-user-select: none;
     -webkit-app-region: drag;
 	
-	.item {
-		float: right;
-		
+	.item {		
 		height: 30px;
 		width: 30px;
-		padding-top: 3px;
+        padding-top: 3px;
 		text-align: center;
 		vertical-align: middle;
 		
 		-webkit-app-region: no-drag;
-		
+		position: absolute;
+        
 		color: #f57c00;
+        z-index: 901;
+        
+        &#close {
+            top: 0;
+            right: 0;
+        }
+        
+        &#minimize {
+            top: 0;
+            right: 33px;
+        }
 	
 		&:hover {
 			color: #fb8c00;
