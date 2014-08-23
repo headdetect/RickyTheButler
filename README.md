@@ -8,3 +8,9 @@ Slave for the famous android app [Tasker](https://play.google.com/store/apps/det
 ![Murica](http://imgur.com/qtD0BXg.png "Very rough sketch of the program")
 
 
+### Dependencies
+
+```
+npm install ip
+npm install mkdirp
+```
