@@ -135,6 +135,30 @@ function loadCommandView(index) {
     $("#close").click(function() {
         win.close();
     });
+    $("#minimize").click(function() {
+
+        var win = gui.Window.get();
+        var tray;
+
+        // Get the minimize event
+        win.on('minimize', function() {
+          // Hide window
+          this.hide();
+
+          // Show tray
+          tray = new gui.Tray({ icon: 'img/icon-xs.png' });
+
+          // Show window and remove tray when clicked
+          tray.on('click', function() {
+            win.show();
+            this.remove();
+            tray = null;
+          });
+        });
+
+        win.minimize();
+
+    });
 
     $("#txtCommandTitle").click(function() {
         var commandID = $(this).data("id");
