@@ -4,7 +4,7 @@
     "version": "0.1a",
     "main": "index.html",
     "window": {
-        "toolbar": false,
+        "toolbar": true,
         "frame": false,
         "position": "center",
         "width": 700,
