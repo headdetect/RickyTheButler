@@ -89,8 +89,10 @@ function startServer() {
 
                 if(command.url.toLowerCase() === request.url.toLowerCase()) {
                     executeCommand(command.command);
+					return;
                 }
             }
+			request.close();
         }).listen(storage.options.port, storage.options.bind);
     });
 }
@@ -191,7 +193,9 @@ function loadCommandView(index) {
         });
     });
 
-    $('#lblLocalIP').text( ip.address() );
+	readStorage(function() {
+		$('#lblLocalIP').text( "http://" + ip.address() + ":" + storage.options.port);
+	});
 
     reloadCommandList();
     startServer();
