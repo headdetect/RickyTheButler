@@ -6,10 +6,10 @@ body, html {
     border: solid .08em #ff9800;
     width: 100%;
     height: 100%;
-    
+
     font-family: 'Open Sans', sans-serif;
-	
-	padding-top: 10px;
+
+    padding-top: 10px;
 }
 
 
@@ -17,57 +17,64 @@ body, html {
     height: 30px;
     color: #eee;
     background: #ff9800;
-	
+
 
     z-index: 900;
     position: absolute;
-	
-	top:0;
-	left: 0;
-	right: 0;
-    
+
+    top:0;
+    left: 0;
+    right: 0;
+
     -webkit-user-select: none;
     -webkit-app-region: drag;
-	
-	.item {		
-		height: 30px;
-		width: 30px;
+
+    .item {
+        height: 30px;
+        width: 30px;
         padding-top: 3px;
-		text-align: center;
-		vertical-align: middle;
-		
-		-webkit-app-region: no-drag;
-		position: absolute;
-        
-		color: #f57c00;
+        text-align: center;
+        vertical-align: middle;
+
+        -webkit-app-region: no-drag;
+        position: absolute;
+
+        color: #f57c00;
         z-index: 901;
-        
+        font-size: 18px;
+
         &#close {
             top: 0;
             right: 0;
         }
-        
+
         &#minimize {
             top: 0;
             right: 33px;
         }
-	
-		&:hover {
-			color: #fb8c00;
-			background: #ef6c00;
-			cursor: pointer;
-		}
-	}
-    
+
+        &#settings {
+            top: 0;
+            left: 0;
+
+        }
+
+        &:hover {
+            color: #fb8c00;
+            background: #ef6c00;
+            cursor: pointer;
+        }
+    }
+
     .title {
         position:absolute;
         width: 100%;
         text-align: center;
         color: white;
-        
-        font-size: 16px;
-		padding-top: 4px;
-        
+
+        font-size: 14px;
+        padding-top: 4px;
+
     }
 }
 
@@ -80,34 +87,48 @@ body, html {
 .footer {
     position: absolute;
     height: 30px;
-    
+
     bottom: 0;
     left: 0;
     right: 0;
-    
+
     background: #ff9800;
-    
+
     .container {
         padding: 5px;
         margin-top: 0;
         margin-left: 15px;
-        
+
         .item {
             color: white;
             position: relative;
         }
     }
-    
+
+}
+
+.settings {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: -250px;
+    width: 250px;
+    border: 1px solid #ff9800;
+    background: white;
+    padding: 40px 20px 0 20px;
 }
 
 .bg-dark {
-    padding: 3px;
+    padding: 4px;
     background: #241F23;
     text-shadow: 1px 1px 0 #120F11;
+    .text-muted {
+        color: #aaa;
+    }
 }
 
 #command-area {
-    
+
     #txtCommandTitle {
         color: #333;
     }

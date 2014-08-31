@@ -89,10 +89,10 @@ function startServer() {
 
                 if(command.url.toLowerCase() === request.url.toLowerCase()) {
                     executeCommand(command.command);
-					return;
+                    return;
                 }
             }
-			request.close();
+            request.close();
         }).listen(storage.options.port, storage.options.bind);
     });
 }
@@ -137,6 +137,17 @@ function loadCommandView(index) {
     $("#close").click(function() {
         win.close();
     });
+
+
+    $("#settings").click(function() {
+        var settings = $(".settings");
+        if (settings.css("left") == '0px'){
+            settings.animate({ left: '-250px'}, 300);
+        } else {
+            settings.animate({ left: '0'}, 300);
+        }
+    })
+
     $("#minimize").click(function() {
 
         var win = gui.Window.get();
@@ -160,6 +171,15 @@ function loadCommandView(index) {
 
         win.minimize();
 
+    });
+
+    $("#btnSaveSettings").click(function() {
+        storage.options.bind = $("#txtIPAddress").val();
+        storage.options.port = $("#txtPort").val();
+        saveStorage(function() {
+            // Close settings pane //
+            $(".settings").animate({ left: '-250px'}, 300);
+        });
     });
 
     $("#txtCommandTitle").click(function() {
@@ -193,9 +213,12 @@ function loadCommandView(index) {
         });
     });
 
-	readStorage(function() {
-		$('#lblLocalIP').text( "http://" + ip.address() + ":" + storage.options.port);
-	});
+    readStorage(function() {
+        $('#lblLocalIP').html( ip.address() + ":<span class='text-muted'>" + storage.options.port + "</span>");
+
+        $("#txtIPAddress").val(storage.options.bind);
+        $("#txtPort").val(storage.options.port);
+    });
 
     reloadCommandList();
     startServer();
