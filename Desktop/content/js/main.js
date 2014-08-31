@@ -113,6 +113,9 @@ function loadCommandView(index) {
             url: ""
         });
         index = storage.commands.length - 1;
+        $("#btnDeleteCommand").hide();
+    } else {
+        $("#btnDeleteCommand").show();
     }
 
     var command = storage.commands[index];
@@ -122,6 +125,7 @@ function loadCommandView(index) {
     // Fill Command Area //
     $("#txtCommandTitle").data("id", index);
     $("#btnSaveCommand").data("id", index);
+    $("#btnDeleteCommand").data("id", index);
     $("#txtCommandTitle").text(command.name);
     $("#txtCommand").val(command.command);
     $("#txtUrl").val(command.url);
@@ -186,9 +190,21 @@ function loadCommandView(index) {
         var commandID = $(this).data("id");
         bootbox.prompt("Rename this command to?", function(result) {
             if (result !== null) {
-                 storage.commands[commandID].name = result;
+                storage.commands[commandID].name = result;
                 loadCommandView(commandID);
             }
+        });
+    });
+
+    $("#btnDeleteCommand").click(function() {
+        var commandID = $(this).data("id");
+        bootbox.confirm("Are you sure you want to delete the command?", function(result) {
+          if (result) {
+            storage.commands.splice(commandID, 1);
+            saveStorage(function(){
+                reloadCommandList();
+            });
+          }
         });
     });
 
