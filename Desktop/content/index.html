@@ -53,13 +53,24 @@
         </div>
 
         <div class="settings">
+			<div class="form-group">
+                <button class="btn btn-sm btn-default" id="btnDebugWindow">Developer Window</button>
+            </div>
+			
             <div class="form-group">
                 <label for="txtIPAddress">Binding Address</label>
                 <input type="string" class="form-control" id="txtIPAddress" placeholder="Default: 0.0.0.0">
             </div>
+			
             <div class="form-group">
                 <label for="txtPort">Port</label>
                 <input type="number" class="form-control" id="txtPort" placeholder="Default: 8080">
+            </div>
+			
+			<div class="form-group">
+				<label>
+					<input type="checkbox" id="chkCommandOutput"> Log command output
+				</label>
             </div>
 
             <div class="form-group">

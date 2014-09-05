@@ -4,13 +4,23 @@ body, html {
     margin: 0;
 
     border: solid .08em #ff9800;
-    width: 100%;
-    height: 100%;
+    
+	position:absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
 
     font-family: 'Open Sans', sans-serif;
 
     padding-top: 10px;
+	
+	/*fancy scroll bar. by fancy we mean none. */
+	::-webkit-scrollbar { 
+		display: none;
+	}
 }
+
 
 
 .bar {
@@ -20,7 +30,7 @@ body, html {
 
 
     z-index: 900;
-    position: absolute;
+    position: fixed;
 
     top:0;
     left: 0;
@@ -85,7 +95,7 @@ body, html {
 }
 
 .footer {
-    position: absolute;
+    position: fixed;
     height: 30px;
 
     bottom: 0;

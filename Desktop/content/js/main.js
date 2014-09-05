@@ -14,7 +14,6 @@ var storageLocation = "./files/storage.json";
 
 var storage;
 
-
 if(fs.existsSync(storageLocation)) {
 
     console.log("Storage.json was found");
@@ -28,14 +27,15 @@ if(fs.existsSync(storageLocation)) {
             url : "/lockcomputer"
     }];
 
-    var server = {
-        bind : "0.0.0.0",
-        port   : 8080
+    var options = {
+        bind      : "0.0.0.0",
+        port      : 8080,
+		logOutput : true
     };
 
     storage = {
         "commands" : commands,
-        "options"  : server
+        "options"  : options
     };
 
     mkdirp("./files/"); // Create the folders //
@@ -89,16 +89,25 @@ function startServer() {
 
                 if(command.url.toLowerCase() === request.url.toLowerCase()) {
                     executeCommand(command.command);
+					if (request != null) 
+						request.socket.end();
                     return;
                 }
             }
-            request.close();
+			if (request != null) 
+				request.socket.end();
         }).listen(storage.options.port, storage.options.bind);
     });
 }
 
 function executeCommand(cmd) {
     function puts(error, stdout, stderror) {
+		if(storage.options.logOutput) {
+			if(stdout != "")
+				console.log(stdout);
+			if(stderror != "")
+				console.error(stderror);
+		}
         sys.puts(stdout);
     }
 
@@ -180,6 +189,7 @@ function loadCommandView(index) {
     $("#btnSaveSettings").click(function() {
         storage.options.bind = $("#txtIPAddress").val();
         storage.options.port = $("#txtPort").val();
+		storage.options.logOutput = $("#chkCommandOutput").is(":checked");
         saveStorage(function() {
             // Close settings pane //
             $(".settings").animate({ left: '-250px'}, 300);
@@ -222,18 +232,25 @@ function loadCommandView(index) {
         command.name = $("#txtCommandTitle").text();
         command.command = $("#txtCommand").val();
         command.url = $("#txtUrl").val();
+		
 
         saveStorage(function(){
             reloadCommandList();
             $this.button('reset');
         });
     });
+	
+	$("#btnDebugWindow").click(function() {
+		win.showDevTools();
+	});
+	
 
     readStorage(function() {
         $('#lblLocalIP').html( ip.address() + ":<span class='text-muted'>" + storage.options.port + "</span>");
 
         $("#txtIPAddress").val(storage.options.bind);
         $("#txtPort").val(storage.options.port);
+		$('#chkCommandOutput').prop('checked', storage.options.logOutput);
     });
 
     reloadCommandList();
