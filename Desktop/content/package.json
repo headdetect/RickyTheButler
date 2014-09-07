@@ -1,10 +1,10 @@
 {
     "name": "Tasker Slave",
-    "description": "Tasker Slave, android app helper",
-    "version": "0.1a",
+    "description": "Slave for the famous android app Tasker. Will receive HTTP POSTS/GETS and run any specified command. Very useful for mobile automation.",
+    "version": "0.2",
     "main": "index.html",
     "window": {
-        "toolbar": true,
+        "toolbar": false,
         "frame": false,
         "position": "center",
         "width": 700,
