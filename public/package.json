@@ -1,0 +1,15 @@
+{
+  "name": "Tasker Slave",
+  "description": "Slave for the famous android app Tasker. Will receive HTTP POSTS/GETS and run any specified command. Very useful for mobile automation.",
+  "version": "1.1",
+  "main": "index.html",
+  "single-instance": true,
+  "dom_storage_quota": 1024,
+  "window": {
+    "toolbar": true,
+    "frame": false,
+    "position": "center",
+    "width": 700,
+    "height": 500
+  }
+}
