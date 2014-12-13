@@ -1,0 +1,1 @@
+{"commands":[{"name":"Lock Computer","command":"echo hi","url":"/lockcomputer"}],"options":{"bind":"0.0.0.0","port":8080,"logOutput":true}}
