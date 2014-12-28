@@ -1,7 +1,5 @@
 // Import regular css //
-@import "bootstrap.min.css";
-@import "font-awesome.min.css";
-@import "sweet-alert.min.css";
+@import "vendor.css";
 
 // Import our sass //
 @import "variables.scss";
@@ -25,7 +23,7 @@ body, html {
 
     padding-top: 10px;
 
-    /*fancy scroll bar. by fancy we mean none. */
+    /*fancy scroll bar. by fancy I mean none. */
     ::-webkit-scrollbar {
         display: none;
     }
@@ -33,13 +31,13 @@ body, html {
 
 
 
-.bar {
+#bar {
     height: 30px;
     color: #eee;
     background: $mainColor;
 
 
-    z-index: 900;
+    z-index: 999;
     position: fixed;
 
     top:0;

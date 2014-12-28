@@ -64,7 +64,6 @@ function readStorage(onComplete) {
 }
 
 function reloadCommandList() {
-
     readStorage(function() {
         // Fill list //
 
@@ -81,31 +80,39 @@ function reloadCommandList() {
     });
 }
 
+var tries = 0;
+var server;
 function startServer() {
     readStorage(function() {
-        http.createServer(function(request, result) {
+        server = http.createServer(function(request, result) {
             for(var i = 0; i < storage.commands.length; i++) {
                 var command = storage.commands[i];
 
                 if(command.url.toLowerCase() === request.url.toLowerCase()) {
                     executeCommand(command.command);
-                    if (request != null)
+                    if (request)
                         request.socket.end();
                     return;
                 }
             }
-            if (request != null)
+            if (request)
                 request.socket.end();
-        }).listen(storage.options.port, storage.options.bind);
+        });
     });
+
+    win.on("close", function() {
+        if (server) 
+            server.close();
+        this.close(true);
+    })
 }
 
 function executeCommand(cmd) {
     function puts(error, stdout, stderror) {
         if(storage.options.logOutput) {
-            if(stdout != "")
+            if (stdout)
                 console.log(stdout);
-            if(stderror != "")
+            if (stderror)
                 console.error(stderror);
         }
         sys.puts(stdout);

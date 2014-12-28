@@ -32,7 +32,8 @@ gulp.task('vendorjs', function() {
 })
 
 gulp.task('watch', function() {
-   //gulp.watch('./app/scss/*.scss', ['sass']);
+   gulp.watch('./app/scss/*.scss', ['sass']);
+   gulp.watch('./app/js/*.js', ['js']);
 });
 
  
