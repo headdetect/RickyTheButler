@@ -30,7 +30,7 @@ header {
     top:0;
     left: 0;
     right: 0;
-    z-index: 3;
+    z-index: 4;
     position: fixed;
 
     display:flex;
@@ -102,7 +102,7 @@ header {
 }
 
 .info {
-    z-index:2;
+    z-index:3;
     
     position: fixed;
     height: 31px;
@@ -135,7 +135,7 @@ header {
     background: white;
     padding: 40px 20px 0 20px;
     
-    z-index: 1;
+    z-index: 2;
 }
 
 .bg-dark {
