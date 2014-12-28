@@ -10,6 +10,9 @@ Assistant for the famous android app [Tasker](https://play.google.com/store/apps
 
 ### Building
 
-Clone this repo `git clone https://github.com/headdetect/RickyTheButler.git`  
-Install dependencies `npm install`  
-Run the app `npm run app`
+```shell
+git clone https://github.com/headdetect/RickyTheButler.git
+npm install
+gulp  # Use this if you plan on modifying any files
+npm run app  # Enter in new tab/window
+```
