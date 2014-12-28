@@ -6,11 +6,8 @@
 @import "theme.scss";
 
 body, html {
-    background: #f9f9f9;
     padding: 0;
     margin: 0;
-
-    border: solid .08em $mainColor;
 
     position:absolute;
     top: 0;
@@ -19,7 +16,7 @@ body, html {
     left: 0;
 
     -webkit-font-smoothing:antialiased;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
 
     padding-top: 10px;
 
@@ -29,104 +26,95 @@ body, html {
     }
 }
 
-
-
-#bar {
-    height: 30px;
-    color: #eee;
-    background: $mainColor;
-
-
-    z-index: 999;
-    position: fixed;
-
+header {
     top:0;
     left: 0;
     right: 0;
+    z-index: 3;
+    position: fixed;
 
-    -webkit-user-select: none;
-    -webkit-app-region: drag;
-
-    .item {
-        height: 30px;
-        width: 30px;
-        padding-top: 3px;
-        text-align: center;
-        vertical-align: middle;
-
-        -webkit-app-region: no-drag;
-        position: absolute;
-
-        color: $mainColorDark;
-        z-index: 901;
-        font-size: 18px;
-
-        &#close {
-            top: 0;
-            right: 0;
-        }
-
-        &#minimize {
-            top: 0;
-            right: 33px;
-        }
-
-        &#settings {
-            top: 0;
-            left: 0;
-
-        }
-
-        &:hover {
-            color: $mainColor;
-            background: $mainColorDark;
-            cursor: pointer;
-        }
-    }
-
-    .title {
-        position:absolute;
-        width: 100%;
-        text-align: center;
-        color: white;
-
-        font-size: 14px;
-        padding-top: 4px;
-
-    }
-}
-
-.header {
-    margin: 0;
-    position: absolute;
-    top: 29px;
-    height: 30px;
-    left: 0;
-    right: 0;
-    
+    display:flex;
     background: $mainColor;
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+
+    #menu {
+        height: 30px;
+        flex: 1;
+
+        .item {
+            height: 30px;
+            width: 30px;
+            padding: 5px;
+            position: relative;
+
+            float: right;
+            
+            text-align: center;
+            color: white;
+            z-index: 901;
+
+            font-size: 16px;
+
+            -webkit-app-region: no-drag;
+
+            &.seperator {
+                margin: 3px 9px 0 9px;
+                width: 1px;
+                height: 30 - 3 - 3px;
+                padding: 0 1px;
+                background: lighten($mainColorDark, 6%);
+            }
+
+            // fix for the stupid info sign
+
+            &:hover {
+                &#close-menu-item {
+                    color: white;
+                    background: $red;
+                }
+                 &.seperator {
+                    background: lighten($mainColorDark, 6%);
+                    cursor: default;
+                }
+                background: $mainColorDark;
+                cursor: pointer;
+            }
+            &.active {
+                background: $mainColorDark;
+            }
+        }
+    }
+
+    #title {
+        flex: 1;
+        padding: 2px 0 0 10px;
+        font-size: 16px; 
+        color: white;
+        font-weight: 400;
+    }
 }
 
 .container {
     padding: 20px;
     position: relative;
-    margin-top: 25px;
+    margin-top: 20px;
 }
 
-.footer {
-    z-index:990;
+.info {
+    z-index:2;
     
     position: fixed;
-    height: 30px;
+    height: 31px;
 
-    bottom: 0;
+    bottom: -31px;
     left: 0;
     right: 0;
 
     background: $mainColor;
 
     .container {
-        padding: 5px;
+        padding: 6px;
         margin-top: 0;
         margin-left: 15px;
 
@@ -135,7 +123,6 @@ body, html {
             position: relative;
         }
     }
-
 }
 
 .settings {
@@ -148,15 +135,15 @@ body, html {
     background: white;
     padding: 40px 20px 0 20px;
     
-    z-index: 700;
+    z-index: 1;
 }
 
 .bg-dark {
-    padding: 4px;
+    padding: 5px;
     background: #241F23;
     text-shadow: 1px 1px 0 #120F11;
+    border-radius: 4px;
     .text-muted {
         color: #aaa;
     }
 }
-

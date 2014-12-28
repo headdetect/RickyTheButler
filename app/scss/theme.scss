@@ -1,13 +1,10 @@
 @import "variables.scss";
 
 .list-group-item {
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.26);
-    border: 1px solid transparent;
-    
     &.active,
     &:focus {
-        border-color: $mainColor;
         background-color: white;
+        border-color: $mainColor;
         color: #555;
         
         p.list-group-item-text {
@@ -28,14 +25,14 @@
         &:after {
             border-color: rgba(0, 0, 0, 0);
             border-left-color: transparent;
-            border-width: 15px;
-	        margin-top: -15px;
+            border-width: 10px;
+	        margin-top: -10px;
         }
         &:before {
             border-color: rgba(194, 225, 245, 0);
             border-left-color: $mainColor;
-            border-width: 16px;
-	        margin-top: -16px;
+            border-width: 11px;
+	        margin-top: -11px;
         }
         
         &:hover {
@@ -53,15 +50,6 @@
         }
     }
     
-    &:first-child {
-        border-top-right-radius: 0;
-        border-top-left-radius: 0;
-    }
-
-    &:last-child {
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-    }
 }
 
 label {

@@ -109,7 +109,7 @@ function startServer() {
 
 function executeCommand(cmd) {
     function puts(error, stdout, stderror) {
-        if(storage.options.logOutput) {
+        if (storage.options.logOutput) {
             if (stdout)
                 console.log(stdout);
             if (stderror)
@@ -122,6 +122,7 @@ function executeCommand(cmd) {
 }
 
 function loadCommandView(index) {
+    $('.container .list-group-item').removeClass("active");
     if( index == -1 ) {
         storage.commands.push({
             name: "New Command",
@@ -130,12 +131,13 @@ function loadCommandView(index) {
         });
         index = storage.commands.length - 1;
         $("#btnDeleteCommand").hide();
+        $('#btnAddCommand.list-group-item').addClass("active");
     } else {
         $("#btnDeleteCommand").show();
+        $('#lstCommands .list-group-item[data-id=' + index + ']').addClass("active");
     }
 
-    $('#lstCommands .list-group-item').removeClass("active");
-    $('#lstCommands .list-group-item[data-id=' + index + ']').addClass("active");
+    
     
     
     var command = storage.commands[index];
@@ -158,21 +160,34 @@ function loadCommandView(index) {
 (function($) {
     $("[title]").tooltip();
 
-    $("#close").click(function() {
+    $("#close-menu-item").click(function() {
         win.close();
     });
 
 
-    $("#settings").click(function() {
+    $("#settings-menu-item").click(function() {
         var settings = $(".settings");
         if (settings.css("left") == '0px'){
             settings.animate({ left: '-250px'}, 300);
+            $("#settings-menu-item").removeClass("active");
         } else {
             settings.animate({ left: '0'}, 300);
+            $("#settings-menu-item").addClass("active");
+        }
+    });
+
+    $("#info-menu-item").click(function() {
+        var info = $(".info");
+        if (info.css("bottom") == '0px'){
+            info.animate({ bottom: '-31px'}, 300);
+            $("#info-menu-item").removeClass("active");
+        } else {
+            info.animate({ bottom: '0'}, 300);
+            $("#info-menu-item").addClass("active");
         }
     })
 
-    $("#minimize").click(function() {
+    $("#minimize-menu-item").click(function() {
 
         var win = gui.Window.get();
         var tray;
