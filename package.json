@@ -2,6 +2,7 @@
   "author": "Brayden Lopez",
   "name": "RickyTheButler",
   "description": "Ricky is a butler",
+  "repository": "https://github.com/headdetect/RickyTheButler.git",
   "version": "0.0.1a",
   "devDependencies": {
     "browser-sync": "^1.7.2",

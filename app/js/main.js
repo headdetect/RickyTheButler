@@ -98,11 +98,16 @@ function startServer() {
             if (request)
                 request.socket.end();
         });
+        server.listen(storage.options.port, storage.options.bind);
     });
 
     win.on("close", function() {
-        if (server) 
-            server.close();
+        try {
+            if (server) 
+                server.close();
+        } catch(err) {
+            console.log(err);
+        }
         this.close(true);
     })
 }
