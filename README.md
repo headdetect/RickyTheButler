@@ -5,7 +5,7 @@ Assistant for the famous android app [Tasker](https://play.google.com/store/apps
 
 ### Screen shots
 **Front Page**
-![Murica](http://i.imgur.com/Iycr5vj.png "Very rough sketch of the program")
+![Murica](http://i.imgur.com/jVM3Q3i.png "Very rough sketch of the program")
 
 
 ### Dependencies
