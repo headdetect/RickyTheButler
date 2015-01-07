@@ -21,5 +21,13 @@
   },
   "scripts": {
     "app": "nodewebkit public"
-  }
+  },
+  "main": "index.html",
+    "window": {
+        "toolbar": true,
+        "frame": true,
+        "position": "center",
+        "width": 700,
+        "height": 500
+    }
 }

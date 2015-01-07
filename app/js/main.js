@@ -10,53 +10,73 @@ var gui     = require('nw.gui'),
 
 var win = gui.Window.get();
 
-var storageLocation = "./files/storage.json";
+var settingsLocation = "./files/settings.json",
+    commandsLocation = "./files/commands.json";
 
-var storage;
+var settings,
+    commands;
 
-if(fs.existsSync(storageLocation)) {
-
-    console.log("Storage.json was found");
-
-} else {
+if(fs.existsSync(settingsLocation)) 
+    console.log("settings.json was found");
+else {
     // Is first run //
 
-    var commands = [{
-            name : "Lock Computer",
-            command : "echo hi",
-            url : "/lockcomputer"
-    }];
-
-    var options = {
+    settings = {
         bind      : "0.0.0.0",
         port      : 8080,
         logOutput : true
     };
 
-    storage = {
-        "commands" : commands,
-        "options"  : options
-    };
-
     mkdirp("./files/"); // Create the folders //
-    saveStorage();
+    saveSettings();
 }
 
-function saveStorage(onComplete) {
-    fs.writeFile(storageLocation, JSON.stringify(storage), function(e) {
+if(fs.existsSync(commandsLocation)) 
+    console.log("commands.json was found");
+else {
+    commands = [{
+        name : "Lock Computer",
+        command : "echo hi",
+        url : "/lockcomputer"
+    }];
+    saveCommands();
+}
+
+function saveSettings(onComplete) {
+    fs.writeFile(settingsLocation, JSON.stringify(settings), function(e) {
         if(e) throw e;
 
-        console.log("Wrote to -> storage.json");
+        console.log("Wrote to -> settings.json");
+        if( onComplete !== null && typeof onComplete == "function" )
+            onComplete();
+    });
+}
+function saveCommands(onComplete) {
+    fs.writeFile(commandsLocation, JSON.stringify(commands), function(e) {
+        if(e) throw e;
+
+        console.log("Wrote to -> commands.json");
         if( onComplete !== null && typeof onComplete == "function" )
             onComplete();
     });
 }
 
-function readStorage(onComplete) {
-    fs.readFile("./files/storage.json", function(err, data) {
+function readSettings(onComplete) {
+    fs.readFile(settingsLocation, function(err, data) {
         if(err) throw err;
 
-        storage = JSON.parse(data);
+        settings = JSON.parse(data);
+
+        if (onComplete !== null)
+            onComplete();
+    })
+}
+
+function readCommands(onComplete) {
+    fs.readFile(commandsLocation, function(err, data) {
+        if(err) throw err;
+
+        commands = JSON.parse(data);
 
         if (onComplete !== null)
             onComplete();
@@ -64,14 +84,14 @@ function readStorage(onComplete) {
 }
 
 function reloadCommandList() {
-    readStorage(function() {
+    readCommands(function() {
         // Fill list //
 
         var lstCommands = $("#lstCommands");
             lstCommands.html('');
 
-        for (var i = 0; i < storage.commands.length; i++) {
-            var command = storage.commands[i];
+        for (var i = 0; i < commands.length; i++) {
+            var command = commands[i];
 
             var wrapper = $("<a href='javascript:void(0)' data-id='" + i + "' onclick='loadCommandView(" + i + ")' class='list-group-item'><b>" + command.name + "</b><p class='list-group-item-text text-muted'>" + command.url + "</p></a>");
             lstCommands.prepend(wrapper);
@@ -83,22 +103,24 @@ function reloadCommandList() {
 var tries = 0;
 var server;
 function startServer() {
-    readStorage(function() {
-        server = http.createServer(function(request, result) {
-            for(var i = 0; i < storage.commands.length; i++) {
-                var command = storage.commands[i];
+    readCommands(function() {
+        readSettings(function() {
+            server = http.createServer(function(request, result) {
+                for(var i = 0; i < commands.length; i++) {
+                    var command = commands[i];
 
-                if(command.url.toLowerCase() === request.url.toLowerCase()) {
-                    executeCommand(command.command);
-                    if (request)
-                        request.socket.end();
-                    return;
+                    if(command.url.toLowerCase() === request.url.toLowerCase()) {
+                        executeCommand(command.command);
+                        if (request)
+                            request.socket.end();
+                        return;
+                    }
                 }
-            }
-            if (request)
-                request.socket.end();
+                if (request)
+                    request.socket.end();
+            });
+            server.listen(settings.port, settings.bind);
         });
-        server.listen(storage.options.port, storage.options.bind);
     });
 
     win.on("close", function() {
@@ -114,7 +136,7 @@ function startServer() {
 
 function executeCommand(cmd) {
     function puts(error, stdout, stderror) {
-        if (storage.options.logOutput) {
+        if (settings.logOutput) {
             if (stdout)
                 console.log(stdout);
             if (stderror)
@@ -129,12 +151,12 @@ function executeCommand(cmd) {
 function loadCommandView(index) {
     $('.container .list-group-item').removeClass("active");
     if( index == -1 ) {
-        storage.commands.push({
+        commands.push({
             name: "New Command",
             command: "",
             url: ""
         });
-        index = storage.commands.length - 1;
+        index = commands.length - 1;
         $("#btnDeleteCommand").hide();
         $('#btnAddCommand.list-group-item').addClass("active");
     } else {
@@ -145,7 +167,7 @@ function loadCommandView(index) {
     
     
     
-    var command = storage.commands[index];
+    var command = commands[index];
     var commandArea = $("#command-area");
 
 
@@ -171,12 +193,12 @@ function loadCommandView(index) {
 
 
     $("#settings-menu-item").click(function() {
-        var settings = $(".settings");
-        if (settings.css("left") == '0px'){
-            settings.animate({ left: '-250px'}, 300);
+        var $settings = $(".settings");
+        if ($settings.css("left") == '0px'){
+            $settings.animate({ left: '-250px'}, 300);
             $("#settings-menu-item").removeClass("active");
         } else {
-            settings.animate({ left: '0'}, 300);
+            $settings.animate({ left: '0'}, 300);
             $("#settings-menu-item").addClass("active");
         }
     });
@@ -218,10 +240,10 @@ function loadCommandView(index) {
     });
 
     $("#btnSaveSettings").click(function() {
-        storage.options.bind = $("#txtIPAddress").val();
-        storage.options.port = $("#txtPort").val();
-        storage.options.logOutput = $("#chkCommandOutput").is(":checked");
-        saveStorage(function() {
+        settings.bind = $("#txtIPAddress").val();
+        settings.port = $("#txtPort").val();
+        settings.logOutput = $("#chkCommandOutput").is(":checked");
+        saveSettings(function() {
             // Close settings pane //
             swal("Sweet!", "Successfully saved settings!", "success");
             $(".settings").animate({ left: '-250px' }, 300);
@@ -233,7 +255,7 @@ function loadCommandView(index) {
         var commandID = $(this).data("id");
         bootbox.prompt("Rename this command to?", function(result) {
             if (result !== null) {
-                storage.commands[commandID].name = result;
+                commands[commandID].name = result;
                 loadCommandView(commandID);
             }
         });
@@ -243,8 +265,8 @@ function loadCommandView(index) {
         var commandID = $(this).data("id");
         bootbox.confirm("Are you sure you want to delete the command?", function(result) {
           if (result) {
-            storage.commands.splice(commandID, 1);
-            saveStorage(function(){
+            commands.splice(commandID, 1);
+            saveCommands(function(){
                 reloadCommandList();
             });
           }
@@ -257,7 +279,7 @@ function loadCommandView(index) {
 
     $("#btnSaveCommand").click(function() {
         var index = $(this).data("id");
-        var command = storage.commands[index];
+        var command = commands[index];
         var $this = $(this);
         $this.button('loading')
 
@@ -267,7 +289,7 @@ function loadCommandView(index) {
         command.url = $("#txtUrl").val();
 
 
-        saveStorage(function () {
+        saveCommands(function () {
             swal("Sweet!", "Successfully saved command!", "success");
             reloadCommandList();
             $this.button('reset');
@@ -279,12 +301,12 @@ function loadCommandView(index) {
     });
 
 
-    readStorage(function() {
-        $('#lblLocalIP').html( ip.address() + ":<span class='text-muted'>" + storage.options.port + "</span>");
+    readSettings(function() {
+        $('#lblLocalIP').html( ip.address() + ":<span class='text-muted'>" + settings.port + "</span>");
 
-        $("#txtIPAddress").val(storage.options.bind);
-        $("#txtPort").val(storage.options.port);
-        $('#chkCommandOutput').prop('checked', storage.options.logOutput);
+        $("#txtIPAddress").val(settings.bind);
+        $("#txtPort").val(settings.port);
+        $('#chkCommandOutput').prop('checked', settings.logOutput);
     });
 
     reloadCommandList();
