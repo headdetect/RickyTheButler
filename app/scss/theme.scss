@@ -80,6 +80,7 @@ input.form-control[type=number] {
 
 .panel-default>.panel-heading {
     background-color: white;
+    border: none;
 
     input.form-control[type=text] {
         padding-left: 10px;
@@ -100,60 +101,44 @@ input.form-control[type=number] {
 }
 
 .panel {
-    border-radius: 3px;
-
-    .panel-heading {
-        border-bottom: none;
-    }
-
-    .panel-body {
-        padding-bottom: 0;
-        padding: 10px 25px;
-    }
-
-    .panel-footer {
-        background: transparent;
-        padding: 8px;
-        border-top: none;
-    }
+    border-radius: 2px;
 }
 
-// BUTTONS !!! //
+.panel-default {
+    border: none;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.26);
+}
 
-.btn {
+
+.panel-heading {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.panel-body {
+    padding-bottom: 0;
+    padding: 10px 25px;
+}
+
+.panel-footer {
     background: transparent;
-    border: 1px solid transparent;
-    color: #333;
-    padding: 10px;
-    font-weight: bold;
-    outline: 0;
-
-    &:focus, &:active, &:hover {
+    padding: 8px;
+    border-top: none;
+    .btn {
+        background: transparent;
+        border: none;
+        color: #333;
+        padding: 10px;
+        margin: 5px;
+        font-weight: bold;
         outline: 0;
-        box-shadow:none;
-        -webkit-box-shadow:none;
-    }
 
-    &.btn-primary {
-        background-color: $mainColor;
-        border-color: $mainColor;
-        color: white;
-        &:hover, &:active, &:focus{
-            background-color: $mainColorDark;
+        &:focus {
+            outline: 0;
         }
-    }
 
-    &.btn-default {
-        border-color: #ccc;
-    }
-
-    &.btn-danger {
-        color: #F44336;
-        border: 1px solid #F44336;
-        &:hover, &:active, &:focus {
-            color: #D32F2F;
-            border-color: #D32F2F;
-            background: transparent;
+        &.btn-primary {
+            color: $mainColor;
         }
     }
 }

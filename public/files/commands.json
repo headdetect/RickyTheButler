@@ -1,1 +1,1 @@
-[{"name":"Lock Computer","command":"/System/Library/CoreServices/Menu\\ Extras/User.menu/Contents/Resources/CGSession -suspend","url":"/lockcomputer"},{"name":"Reboot","command":"shutdown -r now","url":"/reboot"}]
+[{"name":"Lock Computer","command":"echo hi","url":"/lockcomputer"}]
