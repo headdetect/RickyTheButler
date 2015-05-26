@@ -36,5 +36,5 @@ gulp.task('watch', function() {
    gulp.watch('./app/js/*.js', ['js']);
 });
 
- 
- gulp.task('default', ['sass', 'js', 'vendorjs','css', 'watch']);
+gulp.task('build', ['sass', 'js', 'vendorjs', 'css']); 
+gulp.task('default', ['sass', 'js', 'vendorjs','css', 'watch']);

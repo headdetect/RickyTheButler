@@ -12,10 +12,9 @@
     "gulp-uglify": "^1.0.2",
     "ip": "*",
     "mkdirp": "*",
-    "nodewebkit": "*",
-    "mdns": "2.2.2"
+    "nodewebkit": "*"
   },
   "scripts": {
-    "app": "nodewebkit public"
+    "start": "nodewebkit public"
   }
 }
