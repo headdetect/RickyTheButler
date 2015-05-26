@@ -14,16 +14,18 @@ You are going to need [node.js](http://nodejs.org/), more specifically [npm](htt
 
 ### Building/Running
 
-Running the app is very easy.  
+Running the app is very easy.
 To set it up all you need to run is:
 
 ```shell
 git clone https://github.com/headdetect/RickyTheButler.git
 npm install
+gulp build # Use this if you plan on modifying any files
+npm start  # Enter in new tab/window
 ```
-Once you have everything all installed and ready to go, run these commands to get the app up and going:
+
+Development:
 
 ```shell
-gulp  # Use this if you plan on modifying any files
-npm run app  # Enter in new tab/window
+gulp # Includes gulp build, plus watch
 ```
